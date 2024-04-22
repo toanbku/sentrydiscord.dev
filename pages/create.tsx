@@ -1,10 +1,9 @@
-import { Fragment, useState } from 'react';
-import Link from 'next/link';
-import * as Fathom from 'fathom-client';
-import Footer from '../components/Footer';
-import DonationBanner from '../components/DonationBanner';
-import Spinner from '../components/Spinner';
-import Copy from '../components/Copy';
+import { Fragment, useState } from "react";
+import Link from "next/link";
+import Footer from "../components/Footer";
+import DonationBanner from "../components/DonationBanner";
+import Spinner from "../components/Spinner";
+import Copy from "../components/Copy";
 
 function ExternalLink({
   href,
@@ -22,7 +21,7 @@ function ExternalLink({
 
 export default function Create() {
   const [key, setKey] = useState(null);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -30,19 +29,19 @@ export default function Create() {
     setValue(event.currentTarget.value);
   };
 
-  const getWebhookURL = () => `https://sentrydiscord.dev/api/webhooks/${key}`;
+  const getWebhookURL = () =>
+    `https://${process.env.NEXT_PUBLIC_BASE_URL}/api/webhooks/${key}`;
 
   const onClick = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-    Fathom.trackGoal('4DROBFHL', 1);
 
-    const response = await fetch('/api/create', {
-      method: 'POST',
+    const response = await fetch("/api/create", {
+      method: "POST",
       body: JSON.stringify({ url: value }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -53,7 +52,7 @@ export default function Create() {
       setIsLoading(false);
     } else {
       const json = await response.json();
-      setError(json?.error ?? 'Something went wrong, please try again later.');
+      setError(json?.error ?? "Something went wrong, please try again later.");
       setIsLoading(false);
     }
   };
@@ -74,10 +73,10 @@ export default function Create() {
               Start by making a Discord Webhook
             </h2>
             <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-gray-500">
-              Not sure how? Follow{' '}
+              Not sure how? Follow{" "}
               <ExternalLink href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks">
                 this Discord guide
-              </ExternalLink>{' '}
+              </ExternalLink>{" "}
               to create one. Next, enter that URL below and we'll give you a
               unique webhook to add to Sentry.
             </p>
@@ -148,8 +147,8 @@ export default function Create() {
                       <div className="sm:text-center">
                         <h2 className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                           {key != null
-                            ? 'Your Sentry Webhook'
-                            : 'Enter your Discord webhook URL'}
+                            ? "Your Sentry Webhook"
+                            : "Enter your Discord webhook URL"}
                         </h2>
                         <p className="mt-4 mx-auto max-w-2xl text-lg text-indigo-200">
                           The only information we store is the event platform
@@ -213,10 +212,10 @@ export default function Create() {
                 Finally, add the Webhook Integration to Sentry
               </h2>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-gray-500">
-                You can find it under <strong>Settings</strong> &rarr;{' '}
+                You can find it under <strong>Settings</strong> &rarr;{" "}
                 <strong>Integrations</strong> &rarr; <strong>Webhooks</strong>.
-                Add it to your project, and then in the{' '}
-                <strong>Configure</strong> screen add the above link to the{' '}
+                Add it to your project, and then in the{" "}
+                <strong>Configure</strong> screen add the above link to the{" "}
                 <strong>Callback URLs</strong>. That's it! Save your changes,
                 and click "Test plugin" to see it in action.
               </p>
