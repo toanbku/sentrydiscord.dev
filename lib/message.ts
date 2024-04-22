@@ -18,7 +18,7 @@ export default function createMessage(event) {
       iconURL: `https://${process.env.NEXT_PUBLIC_BASE_URL}/icons/sentry.png`,
     })
     .setFooter({
-      text: "Please consider sponsoring us!",
+      text: "From toanho with luv",
       iconURL: `https://${process.env.NEXT_PUBLIC_BASE_URL}/sponsor.png`,
     })
     .setTimestamp(parser.getTime(event));
